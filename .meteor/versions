@@ -1,5 +1,4 @@
 application-configuration@1.0.4
-autopublish@1.0.2
 autoupdate@1.1.5
 base64@1.0.2
 binary-heap@1.0.2
@@ -56,3 +55,4 @@ underscore@1.0.2
 url@1.0.3
 webapp@1.1.6
 webapp-hashing@1.0.2
+wunderlist@0.1.0

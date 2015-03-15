@@ -4,19 +4,16 @@
 
 <body>
   <h1>Welcome to Meteor!</h1>
-
-  {{> authorizeWunderlist}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
-
-
-<template name="authorizeWunderlist">
-	{{isAuthorized}}
-  <button>Authorize Wunderlist</button>
+<template name="home">
+	{{#if isAuthorized}}
+		Authorized
+		{{isAuthorized}}
+		{{allLists}}
+	{{else}}
+  		<button>Authorize Wunderlist</button>
+  	{{/if}}
 </template>
 
 <template name="auth">
