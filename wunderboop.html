@@ -9,16 +9,25 @@
 <template name="home">
 	{{#if isAuthorized}}
 		Authorized
-		<ul>
-			{{#each allLists}}
-			<li>{{title}}</li>
-			{{/each}}
-		</ul>
+		{{> lists}}
+		
 	{{else}}
   		<button>Authorize Wunderlist</button>
   	{{/if}}
 </template>
 
-<template name="auth">
-	{{authorize}}
+<template name="lists">
+	<ul>
+		{{#each allLists}}
+		<a href="/list/{{id}}"><li>{{title}}</li></a>
+		{{/each}}
+	</ul>
+</template>
+
+<template name="list">
+	<ul>
+		{{#each tasks}}
+		<li>{{title}}</li>
+		{{/each}}
+	</ul>
 </template>

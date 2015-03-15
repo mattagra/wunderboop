@@ -6,9 +6,14 @@
 
 if (Meteor.isClient) {
 
-Router.route('/', function() {
-  this.render('home');
-});
+  Router.route('/', function() {
+    this.render('home');
+  });
+
+  Router.route('/list/:list_id', function() {
+    Session.set("list_id", this.params.list_id);
+    this.render('list');
+  });
 
   Router.route('/authorized', function () {
     // this.render('auth', {
@@ -24,24 +29,14 @@ Router.route('/', function() {
   // counter starts at 0
   Session.setDefault('counter', 0);
 
-  Template.auth.created = function (){
-    // authorize: function () {
-    //   return 
-      Meteor.call("authorizeWunderlist", this.data, function(error, results) {
-        console.log(results);
-        Session.set("access_token", results.data.access_token);
-        Session.get("access_token");
-        Router.redirect("/");
-      });
-      return "";
-    //}
-  };
-
   Template.home.helpers({
     isAuthorized: function() {
       if (Session.get("access_token"))
         return Session.get("access_token");
     },
+  });
+
+  Template.lists.helpers({
     allLists: function () {
       if (!Session.get("allLists")) {
         Meteor.call("getAllLists", Session.get("access_token"), function(err, response) {
@@ -51,6 +46,23 @@ Router.route('/', function() {
         });
       } else {
         return Session.get("allLists");
+      }
+    }
+  });
+
+  Template.list.helpers({
+    tasks: function () {
+      console.log(Session.get("list_id"));
+      var list_id = +Session.get("list_id");
+      if (!Session.get(list_id + "_tasks")) {
+        Meteor.call("getTasks", list_id, Session.get("access_token"), function(err, response) {
+          if (response) {
+            console.log(response);
+            Session.set(list_id + "_tasks", response)
+          }
+        });
+      } else {
+        return Session.get(list_id + "_tasks");
       }
 
     }
@@ -87,6 +99,11 @@ if (Meteor.isServer) {
     getAllLists: function(access_token) {
       check(access_token, String);
       return Wunderlist.getAllLists(access_token);
+    },
+    getTasks: function(list_id, access_token) {
+      check(list_id, Number);
+      check(access_token, String);
+      return Wunderlist.getTasks(list_id, access_token);
     }
   });
 }
