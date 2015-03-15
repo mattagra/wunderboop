@@ -9,8 +9,11 @@
 <template name="home">
 	{{#if isAuthorized}}
 		Authorized
-		{{isAuthorized}}
-		{{allLists}}
+		<ul>
+			{{#each allLists}}
+			<li>{{title}}</li>
+			{{/each}}
+		</ul>
 	{{else}}
   		<button>Authorize Wunderlist</button>
   	{{/if}}

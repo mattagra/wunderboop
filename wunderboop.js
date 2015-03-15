@@ -17,7 +17,6 @@ Router.route('/', function() {
     // }});
     Meteor.call("authorizeWunderlist", this.params.query.code, function(error, results) {
           Session.set("access_token", results.data.access_token);
-          console.log(Session.get("access_token"));
           Router.go("/");
         });
     //this.next();
@@ -26,7 +25,6 @@ Router.route('/', function() {
   Session.setDefault('counter', 0);
 
   Template.auth.created = function (){
-    console.log(this);
     // authorize: function () {
     //   return 
       Meteor.call("authorizeWunderlist", this.data, function(error, results) {
@@ -45,16 +43,16 @@ Router.route('/', function() {
         return Session.get("access_token");
     },
     allLists: function () {
+      if (!Session.get("allLists")) {
+        Meteor.call("getAllLists", Session.get("access_token"), function(err, response) {
+          if (response) {
+            Session.set("allLists", response)
+          }
+        });
+      } else {
+        return Session.get("allLists");
+      }
 
-      var lists = Meteor.subscribe('allLists', Session.get("access_token"));
-      console.log(lists);
-      return lists.ready();
-      var lists = null;
-      Meteor.call("getAllLists", Session.get("access_token"), function (err, response){
-        lists = response;
-        console.log(lists);
-        return lists;
-      });
     }
   });
 
@@ -72,15 +70,6 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
   });
-  Meteor.publish("allLists", function (access_token) {
-    var response = HTTP.call("GET", "http://a.wunderlist.com/api/v1/lists", {
-      headers: {
-        "X-Access-Token": access_token,
-        "X-Client-ID": CLIENT_ID
-      }
-    });
-    return response.data;
-  });
 
   Meteor.methods({
     authorizeWunderlist: function (code) {
@@ -95,5 +84,9 @@ if (Meteor.isServer) {
           }
         });
     },
+    getAllLists: function(access_token) {
+      check(access_token, String);
+      return Wunderlist.getAllLists(access_token);
+    }
   });
 }
