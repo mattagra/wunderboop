@@ -5,8 +5,6 @@
 <body>
   <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
-
   {{> authorizeWunderlist}}
 </body>
 
@@ -17,5 +15,10 @@
 
 
 <template name="authorizeWunderlist">
+	{{isAuthorized}}
   <button>Authorize Wunderlist</button>
+</template>
+
+<template name="auth">
+	{{authorize}}
 </template>
