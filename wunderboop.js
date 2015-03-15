@@ -3,7 +3,6 @@
 var REDIRECT_URI = "http://localhost:3000/authorized";
 
 if (Meteor.isClient) {
-
   Router.route('/', function() {
     this.render('home');
   });
@@ -14,18 +13,11 @@ if (Meteor.isClient) {
   });
 
   Router.route('/authorized', function () {
-    // this.render('auth', {
-    // data: function () {
-    //   return this.params.query.code;
-    // }});
     Meteor.call("authorizeWunderlist", this.params.query.code, function(error, results) {
           Session.set("access_token", results.data.access_token);
           Router.go("/");
         });
-    //this.next();
   });
-  // counter starts at 0
-  Session.setDefault('counter', 0);
 
   Template.home.helpers({
     isAuthorized: function() {
@@ -72,8 +64,6 @@ if (Meteor.isClient) {
       window.location.replace("https://www.wunderlist.com/oauth/authorize?client_id=7d179a4fd3ac31f9b3aa&redirect_uri=" + REDIRECT_URI + "&state=RANDOM", '_blank');
     }
   });
-
-
 }
 
 if (Meteor.isServer) {
