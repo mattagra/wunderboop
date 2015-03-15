@@ -1,8 +1,6 @@
 'use strict';
   
-  var REDIRECT_URI = "http://localhost:3000/authorized";
-  var CLIENT_ID = "7d179a4fd3ac31f9b3aa";
-  var CLIENT_SECRET = "31d61d2c127e76da152fc25cac3ad226d3171e0bac54fc0c3c3740706743";
+var REDIRECT_URI = "http://localhost:3000/authorized";
 
 if (Meteor.isClient) {
 
@@ -90,8 +88,8 @@ if (Meteor.isServer) {
       return HTTP.call("POST", "https://www.wunderlist.com/oauth/access_token", 
         {params: 
           {
-            client_id: CLIENT_ID,
-            client_secret: CLIENT_SECRET,
+            client_id: Meteor.settings.wunderlist,
+            client_secret: Meteor.settings.wunderlist_secret,
             code: code
           }
         });
