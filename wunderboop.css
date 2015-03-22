@@ -63,8 +63,8 @@ nav ul li a:hover{
 
 #lists, #list{
     margin: 10px 0 0 0;
-    text-transform: capitalize;
     font-family: 'Poiret One', cursive;
+    text-align: center;
 }
 #lists li, #list li{
     text-transform: capitalize;
@@ -72,6 +72,7 @@ nav ul li a:hover{
     font-size: 52px;
     color: #BFBFBF;
     padding: 8px 0;
+    text-align: left;
     transition: color .4s linear;
     -webkit-transition: color .4s linear;
     -moz-transition: color .4s linear;
@@ -81,6 +82,7 @@ nav ul li a:hover{
     color: #000;
 }
 .list-title {
+    text-transform: capitalize;
     text-align: center;
     font-size: 32px;
 }
