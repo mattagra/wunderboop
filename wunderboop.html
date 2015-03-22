@@ -34,7 +34,7 @@
 
 <template name="list">
     <div id="list">
-        <p class="list-title">{{list.title}} List</p>
+        <p class="list-title">{{list.title}} List ({{tasksCount.uncompleted_count}})</p>
         <hr />
     	<ul>
     		{{#each tasks}}
