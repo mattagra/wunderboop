@@ -3,7 +3,22 @@
 Wunderlist = {};
 
 Wunderlist.getList = function(list_id, access_token) {
-
+  if(!Meteor.settings.wunderlist)
+    throw new Meteor.Error(500, 'Please provide a Wunderlist token in Meteor.settings');
+  var getList = HTTP.get("http://a.wunderlist.com/api/v1/lists/" + list_id,
+    {
+      timeout: 5000,
+      headers: {
+        "X-Access-Token": access_token,
+        "X-Client-ID": Meteor.settings.wunderlist
+      }
+    }
+  );
+  if(getList.statusCode === 200){
+    return getList.data
+  }else{
+    throw new Meteor.Error(500, "Wunderlist call failed with error: "+getList.error);
+  }
 }
 
 Wunderlist.getAllLists = function(access_token){

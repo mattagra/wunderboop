@@ -4,9 +4,8 @@
 
 <body>
     <nav>
-        <h1>Wunderboop</h1>
+        <a href="/"><h1>Wunderboop</h1></a>
     	<ul>
-            <li><a href="/">Home</a></li>
             <li><a href="/lists">Lists</a></li>
         </ul>
     </nav>
@@ -35,6 +34,8 @@
 
 <template name="list">
     <div id="list">
+        <p class="list-title">{{list.title}} List</p>
+        <hr />
     	<ul>
     		{{#each tasks}}
     		<li>{{title}}</li>

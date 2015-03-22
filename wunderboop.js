@@ -46,7 +46,6 @@ if (Meteor.isClient) {
 
   Template.list.helpers({
     tasks: function () {
-      console.log(Session.get("list_id"));
       var list_id = +Session.get("list_id");
       if (!Session.get(list_id + "_tasks")) {
         Meteor.call("getTasks", list_id, Session.get("access_token"), function(err, response) {
@@ -58,7 +57,19 @@ if (Meteor.isClient) {
       } else {
         return Session.get(list_id + "_tasks");
       }
-
+    },
+    list: function() {
+      var list_id = +Session.get("list_id");
+      if (!Session.get(list_id)) {
+        Meteor.call("getList", list_id, Session.get("access_token"), function(err, response) {
+          if (response) {
+            console.log(response);
+            Session.set(list_id, response)
+          }
+        });
+      } else {
+        return Session.get(list_id);
+      }
     }
   });
 
@@ -95,6 +106,11 @@ if (Meteor.isServer) {
       check(list_id, Number);
       check(access_token, String);
       return Wunderlist.getTasks(list_id, access_token);
+    },
+    getList: function(list_id, access_token) {
+      check(list_id, Number);
+      check(access_token, String);
+      return Wunderlist.getList(list_id, access_token);
     }
   });
 }
