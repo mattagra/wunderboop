@@ -2,6 +2,29 @@
 
 Wunderlist = {};
 
+Wunderlist.completeTask = function(task_id, revision, access_token) {
+  if(!Meteor.settings.wunderlist)
+    throw new Meteor.Error(500, 'Please provide a Wunderlist token in Meteor.settings');
+  var completeTask = HTTP.call("PATCH", "http://a.wunderlist.com/api/v1/tasks/" + task_id,
+    {
+      timeout: 5000,
+      params: {
+        revision: revision,
+        completed: true,
+      },
+      headers: {
+        "X-Access-Token": access_token,
+        "X-Client-ID": Meteor.settings.wunderlist
+      }
+    }
+  );
+  if(completeTask.statusCode === 200){
+    return completeTask.data
+  }else{
+    throw new Meteor.Error(500, "Wunderlist call failed with error: "+completeTask.error);
+  }
+}
+
 Wunderlist.getTasksCount = function(list_id, access_token) {
   if(!Meteor.settings.wunderlist)
     throw new Meteor.Error(500, 'Please provide a Wunderlist token in Meteor.settings');

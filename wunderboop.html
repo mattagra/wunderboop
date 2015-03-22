@@ -36,7 +36,7 @@
     <div id="list">
         <p class="list-title">{{list.title}} List ({{tasksCount.uncompleted_count}})
             <ul class="list_actions">
-                <li><a href="#" title="Create Task"><i class="fa fa-plus"></i></a></li>
+                <li><a href="#" class="create-task" title="Create Task"><i class="fa fa-plus"></i></a></li>
             </ul>
         </p>
         <div class="clear"></div>
@@ -45,7 +45,7 @@
     		{{#each tasks}}
     		<li><span class="task-title">{{title}}</span>
                 <ul class="tasks_actions">
-                    <li><a href="#" title="Mark as Complete"><i class="fa fa-check"></i></a></li>
+                    <li><a href="#" class="complete-task" title="Mark as Complete"><i class="fa fa-check"></i></a></li>
                 </ul>
             </li>
             {{else}}

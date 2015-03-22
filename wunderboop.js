@@ -51,6 +51,9 @@ if (Meteor.isClient) {
         Meteor.call("getTasks", list_id, Session.get("access_token"), function(err, response) {
           if (response) {
             console.log(response);
+            for (var i = 0; i < response.length; i++) {
+              response[i].index = i;
+            }
             Session.set(list_id + "_tasks", response)
           }
         });
@@ -82,8 +85,20 @@ if (Meteor.isClient) {
         });
       } else {
         return Session.get(list_id + "_tasksCount");
+
       }
 
+    }
+  });
+
+  Template.list.events({
+    'click .complete-task': function() {
+      console.log(this);
+      Meteor.call("completeTask", this.id, this.revision, Session.get("access_token"), function(err, response) {
+        if (response) {
+          console.log(response);
+        }
+      });
     }
   });
 
@@ -130,6 +145,12 @@ if (Meteor.isServer) {
       check(list_id, Number);
       check(access_token, String);
       return Wunderlist.getTasksCount(list_id, access_token);
-    }
+    },
+    completeTask: function(task_id, revision, access_token) {
+      check(task_id, Number);
+      check(revision, Number);
+      check(access_token, String);
+      return Wunderlist.completeTask(task_id, revision, access_token);
+    },
   });
 }
