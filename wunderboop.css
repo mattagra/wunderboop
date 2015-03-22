@@ -1,1 +1,34 @@
-/* CSS declarations go here */
+@import url(http://fonts.googleapis.com/css?family=Poiret+One);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 2.5% 5%;
+}
+a {
+    text-decoration: none;
+}
+
+ul li{
+    list-style-type: none;
+}
+
+#lists {
+    margin: 10px 0;
+}
+#lists li {
+    text-transform: capitalize;
+    font-family: 'Poiret One', cursive;
+    font-size: 52px;
+    color: #BFBFBF;
+    padding: 8px 0;
+    transition: color .4s linear;
+    -webkit-transition: color .4s linear;
+    -moz-transition: color .4s linear;
+    -o-transition: color .4s linear;
+}
+#lists li:hover {
+    color: #000;}

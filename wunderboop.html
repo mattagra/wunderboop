@@ -1,33 +1,44 @@
 <head>
-  <title>wunderboop</title>
+    <title>wunderboop</title>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+    <h1>Welcome to Wunderboop!</h1>
+    <nav>
+    	<ul>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </nav>
 </body>
 
 <template name="home">
-	{{#if isAuthorized}}
-		Authorized
-		{{> lists}}
-		
-	{{else}}
-  		<button>Authorize Wunderlist</button>
-  	{{/if}}
+    <div id="home">
+    	{{#if isAuthorized}}
+        	Authorized
+    		{{> lists}}
+    		
+    	{{else}}
+      		<button>Authorize Wunderlist</button>
+      	{{/if}}
+    </div>
 </template>
 
 <template name="lists">
-	<ul>
-		{{#each allLists}}
-		<a href="/list/{{id}}"><li>{{title}}</li></a>
-		{{/each}}
-	</ul>
+    <div id="lists">
+    	<ul>
+    		{{#each allLists}}
+    		<a href="/list/{{id}}"><li>{{title}}</li></a>
+    		{{/each}}
+    	</ul>
+    </div>
 </template>
 
 <template name="list">
-	<ul>
-		{{#each tasks}}
-		<li>{{title}}</li>
-		{{/each}}
-	</ul>
+    <div id="list">
+    	<ul>
+    		{{#each tasks}}
+    		<li>{{title}}</li>
+    		{{/each}}
+    	</ul>
+    </div>
 </template>

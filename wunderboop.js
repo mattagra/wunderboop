@@ -32,6 +32,7 @@ if (Meteor.isClient) {
         Meteor.call("getAllLists", Session.get("access_token"), function(err, response) {
           if (response) {
             Session.set("allLists", response)
+            console.log(response);
           }
         });
       } else {
@@ -60,7 +61,6 @@ if (Meteor.isClient) {
 
   Template.home.events({
     'click button': function () {
-      // increment the counter when button is clicked
       window.location.replace("https://www.wunderlist.com/oauth/authorize?client_id=7d179a4fd3ac31f9b3aa&redirect_uri=" + REDIRECT_URI + "&state=RANDOM", '_blank');
     }
   });
@@ -74,7 +74,7 @@ if (Meteor.isServer) {
   Meteor.methods({
     authorizeWunderlist: function (code) {
       check(code, String);
-      console.log(code);
+      console.log(Meteor.settings.wunderlist, Meteor.settings.wunderlist_secret, code);
       return HTTP.call("POST", "https://www.wunderlist.com/oauth/access_token", 
         {params: 
           {
