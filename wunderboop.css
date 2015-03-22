@@ -5,7 +5,7 @@
     padding: 0;
 }
 
-body {
+.container {
     margin: 2.5% 5%;
 }
 a {
@@ -15,11 +15,50 @@ a {
 ul li{
     list-style-type: none;
 }
-
-#lists {
-    margin: 10px 0;
+nav {
+    background: #2F2F2F;
+    position: relative;
+    top: 0;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 50px;
 }
-#lists li {
+nav h1 {
+    float:left;
+    line-height: 30px;
+    padding: 10px;
+    font-size: 26px;
+    color: #DFDFDF !important;
+    font-family: Helvetica, sans-serif;
+    font-weight: 100;
+}
+nav ul {
+    float: left;
+    height: 50px;
+}
+nav ul li {
+    display: inline-block;
+    height: 50px;
+    padding: 10px;
+    line-height: 30px;
+    font-size: 14px;
+}
+nav ul li a{
+    color: #BFBFBF !important;
+    font-family: Verdana, sans-serif;
+    transition: color .1s linear;
+    -webkit-transition: color .1s linear;
+    -moz-transition: color .1s linear;
+    -o-transition: color .1s linear;
+}
+nav ul li a:hover{
+    color: #FFF !important;
+}
+
+#lists, #list{
+    margin: 10px 0 0 0;
+}
+#lists li, #list li{
     text-transform: capitalize;
     font-family: 'Poiret One', cursive;
     font-size: 52px;
@@ -30,5 +69,5 @@ ul li{
     -moz-transition: color .4s linear;
     -o-transition: color .4s linear;
 }
-#lists li:hover {
+#lists li:hover, #list li:hover {
     color: #000;}

@@ -7,6 +7,10 @@ if (Meteor.isClient) {
     this.render('home');
   });
 
+  Router.route('/lists', function() {
+    this.render('lists');
+  });
+
   Router.route('/list/:list_id', function() {
     Session.set("list_id", this.params.list_id);
     this.render('list');
@@ -32,7 +36,6 @@ if (Meteor.isClient) {
         Meteor.call("getAllLists", Session.get("access_token"), function(err, response) {
           if (response) {
             Session.set("allLists", response)
-            console.log(response);
           }
         });
       } else {

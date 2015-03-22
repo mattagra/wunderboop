@@ -3,10 +3,11 @@
 </head>
 
 <body>
-    <h1>Welcome to Wunderboop!</h1>
     <nav>
+        <h1>Wunderboop</h1>
     	<ul>
             <li><a href="/">Home</a></li>
+            <li><a href="/lists">Lists</a></li>
         </ul>
     </nav>
 </body>
@@ -14,7 +15,6 @@
 <template name="home">
     <div id="home">
     	{{#if isAuthorized}}
-        	Authorized
     		{{> lists}}
     		
     	{{else}}

@@ -2,6 +2,10 @@
 
 Wunderlist = {};
 
+Wunderlist.getList = function(list_id, access_token) {
+
+}
+
 Wunderlist.getAllLists = function(access_token){
   if(!Meteor.settings.wunderlist)
     throw new Meteor.Error(500, 'Please provide a Wunderlist token in Meteor.settings');
