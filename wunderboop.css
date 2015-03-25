@@ -24,6 +24,12 @@ hr { display: block; height: 1px;
 .login-display-name {
     color: #DFDFDF;
 }
+.sign-in {
+    margin: 5% 0 0 0;
+    text-align: center;
+    font-family: 'Poiret One', cursive;
+    font-size: 32px;
+}
 
 ul li{
     list-style-type: none;
