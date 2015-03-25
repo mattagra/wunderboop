@@ -33,7 +33,7 @@ if (Meteor.isClient) {
   Template.lists.helpers({
     allLists: function () {
       if (!Session.get("allLists")) {
-        Meteor.call("getAllLists", Session.get("access_token"), function(err, response) {
+        Meteor.call("getAllLists", function(err, response) {
           if (response) {
             Session.set("allLists", response)
           }
@@ -64,7 +64,7 @@ if (Meteor.isClient) {
     list: function() {
       var list_id = +Session.get("list_id");
       if (!Session.get(list_id)) {
-        Meteor.call("getList", list_id, Session.get("access_token"), function(err, response) {
+        Meteor.call("getList", list_id, function(err, response) {
           if (response) {
             console.log(response);
             Session.set(list_id, response)
@@ -101,12 +101,6 @@ if (Meteor.isClient) {
       });
     }
   });
-
-  Template.home.events({
-    'click button': function () {
-      window.location.replace("https://www.wunderlist.com/oauth/authorize?client_id=7d179a4fd3ac31f9b3aa&redirect_uri=" + REDIRECT_URI + "&state=RANDOM", '_blank');
-    }
-  });
 }
 
 if (Meteor.isServer) {
@@ -115,42 +109,37 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
-    authorizeWunderlist: function (code) {
-      check(code, String);
-      console.log(Meteor.settings.wunderlist, Meteor.settings.wunderlist_secret, code);
-      return HTTP.call("POST", "https://www.wunderlist.com/oauth/access_token", 
-        {params: 
-          {
-            client_id: Meteor.settings.wunderlist,
-            client_secret: Meteor.settings.wunderlist_secret,
-            code: code
-          }
-        });
+    getAccessToken : function() {
+      try {
+        return Meteor.user().services.wunderlist.accessToken;
+      } catch(e) {
+        return null;
+      }
     },
-    getAllLists: function(access_token) {
-      check(access_token, String);
-      return Wunderlist.getAllLists(access_token);
+    getAllLists: function() {
+      var token = Meteor.call("getAccessToken");
+      return Wunderlist.getAllLists(token);
     },
-    getTasks: function(list_id, access_token) {
+    getTasks: function(list_id) {
       check(list_id, Number);
-      check(access_token, String);
-      return Wunderlist.getTasks(list_id, access_token);
+      var token = Meteor.call("getAccessToken");
+      return Wunderlist.getTasks(list_id, token);
     },
-    getList: function(list_id, access_token) {
+    getList: function(list_id) {
       check(list_id, Number);
-      check(access_token, String);
-      return Wunderlist.getList(list_id, access_token);
+      var token = Meteor.call("getAccessToken");
+      return Wunderlist.getList(list_id, token);
     },
-    getTasksCount: function(list_id, access_token) {
+    getTasksCount: function(list_id) {
       check(list_id, Number);
-      check(access_token, String);
-      return Wunderlist.getTasksCount(list_id, access_token);
+      var token = Meteor.call("getAccessToken");
+      return Wunderlist.getTasksCount(list_id, token);
     },
-    completeTask: function(task_id, revision, access_token) {
+    completeTask: function(task_id, revision) {
       check(task_id, Number);
       check(revision, Number);
-      check(access_token, String);
-      return Wunderlist.completeTask(task_id, revision, access_token);
+      var token = Meteor.call("getAccessToken");
+      return Wunderlist.completeTask(task_id, revision, token);
     },
   });
 }
